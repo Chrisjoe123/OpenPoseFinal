@@ -1,0 +1,57 @@
+Note OpenPose
+
+yang akan dilakukan
+1. Git Clone
+2. Environment variable
+3. Buat Environment (gw pake conda)
+
+Cara ganti path -> copy path di explorer -> di cmd / conda -> cd "(path yang di copy)" (pakai petik "")
+
+Cara download
+
+1. https://github.com/Chrisjoe123/OpenPoseFinal.git
+
+2. cd tf-pose-estimation
+3. conda create -n tfpose python=3.7
+4. conda activate tfpose
+5. pip3 install -r requirements.txt
+6. pip install tensorflow==1.15
+7. pip install opencv-python==4.1.0.25
+8. pip install protobuf==3.20.3
+
+9. Buat Environment variable
+	- Buka "Edit The System Environment Variable"
+	- Pilih Environment Variable 
+	- Pilih Path
+	- Pilih New
+	- Isi C:\Users\(directory simpan kalian (harusnya dari C atau D))\tf-pose-estimation\swigwin-4.3.1\swigwin-4.3.1
+
+10. cd tf_pose/pafprocess
+11. swig -python -c++ pafprocess.i && python setup.py build_ext --inplace
+
+12. Buka file run_webcam.py di tf-pose-estimation
+13. di line 24 ubah type int jadi str
+14. Untuk run
+	- python run_webcam.py --camera testvideo.MP4 --model mobilenet_thin --resize 320x240 --resize-out-ratio 4.0
+
+	(gw udh siapin 4 video testvideo2 , testvideo3, testvideo4)
+
+
+Extra Note
+
+Kalau ada error ModuleNotFoundError: No module named 'tensorrt'
+
+buka tf_pose -> estimator.py
+
+lalu comment "import tensorrt as trt"
+
+
+Reference :
+
+1. https://www.youtube.com/watch?v=4FZrE3cmTPA&list=PL_Nji0JOuXg24bHB60SB2TwF0PpwhJkCF&index=2&ab_channel=AugmentedAI
+
+2. https://github.com/tryagainconcepts/tf-pose-estimation
+
+
+
+
