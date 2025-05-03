@@ -41,7 +41,6 @@ Cara download:
 	(gw udh siapin 4 video testvideo.mp4, testvideo2.mp4 , testvideo3.mp4, testvideo4.mp4)
 
 Extra Note
-
 1. Kalau ada error ModuleNotFoundError: No module named 'tensorrt'
 2. buka tf_pose -> estimator.py
 3. lalu comment "import tensorrt as trt"
