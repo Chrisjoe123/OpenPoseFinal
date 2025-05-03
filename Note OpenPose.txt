@@ -4,13 +4,13 @@ yang akan dilakukan
 1. Git Clone
 2. Environment variable
 3. Buat Environment (gw pake conda)
+4. Download file dari OneDrive
 
 Cara ganti path -> copy path di explorer -> di cmd / conda -> cd "(path yang di copy)" (pakai petik "")
 
 Cara download
 
 1. https://github.com/Chrisjoe123/OpenPoseFinal.git
-
 2. cd tf-pose-estimation
 3. conda create -n tfpose python=3.7
 4. conda activate tfpose
@@ -29,9 +29,12 @@ Cara download
 10. cd tf_pose/pafprocess
 11. swig -python -c++ pafprocess.i && python setup.py build_ext --inplace
 
-12. Buka file run_webcam.py di tf-pose-estimation
-13. di line 24 ubah type int jadi str
-14. Untuk run
+12. Open https://binusianorg-my.sharepoint.com/personal/christian_gunawan006_binus_ac_id/_layouts/15/guestaccess.aspx?share=EmBgFD0euSRKgavdslaRmJgByaCYz0Teqk6cdyqB7iDBzg&e=DNaxHw
+13. Download File dan buka models -> graph -> cmu -> masukan file yang udh di download
+
+13. Buka file run_webcam.py di tf-pose-estimation
+14. di line 24 ubah type int jadi str
+15. Untuk run
 	- python run_webcam.py --camera testvideo.MP4 --model mobilenet_thin --resize 320x240 --resize-out-ratio 4.0
 
 	(gw udh siapin 4 video testvideo2 , testvideo3, testvideo4)
