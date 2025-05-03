@@ -5,10 +5,11 @@ yang akan dilakukan
 2. Environment variable
 3. Buat Environment (gw pake conda)
 4. Download file dari OneDrive
+5. Siapkan Mental kalian 😊🤗
 
 Cara ganti path -> copy path di explorer -> di cmd / conda -> cd "(path yang di copy)" (pakai petik "")
 
-Cara download
+Cara download:
 
 1. https://github.com/Chrisjoe123/OpenPoseFinal.git
 2. cd tf-pose-estimation
@@ -19,7 +20,7 @@ Cara download
 7. pip install opencv-python==4.1.0.25
 8. pip install protobuf==3.20.3
 
-9. Buat Environment variable
+9. Buat Environment variable:
 	- Buka "Edit The System Environment Variable"
 	- Pilih Environment Variable 
 	- Pilih Path
@@ -34,20 +35,16 @@ Cara download
 
 13. Buka file run_webcam.py di tf-pose-estimation
 14. di line 24 ubah type int jadi str
-15. Untuk run
+15. Untuk run:
 	- python run_webcam.py --camera testvideo.MP4 --model mobilenet_thin --resize 320x240 --resize-out-ratio 4.0
 
-	(gw udh siapin 4 video testvideo2 , testvideo3, testvideo4)
-
+	(gw udh siapin 4 video testvideo.mp4, testvideo2.mp4 , testvideo3.mp4, testvideo4.mp4)
 
 Extra Note
 
-Kalau ada error ModuleNotFoundError: No module named 'tensorrt'
-
-buka tf_pose -> estimator.py
-
-lalu comment "import tensorrt as trt"
-
+1. Kalau ada error ModuleNotFoundError: No module named 'tensorrt'
+2. buka tf_pose -> estimator.py
+3. lalu comment "import tensorrt as trt"
 
 Reference :
 
