@@ -34,11 +34,16 @@ Cara download:
 13. Download File dan buka models -> graph -> cmu -> masukan file yang udh di download
 
 13. Buka file run_webcam.py di tf-pose-estimation
-14. di line 24 ubah type int jadi str
+14. di line 24 ubah type int jadi str (jika ingin test video kalau ingin test camera skip aja)
 15. Untuk run:
+
+	(Bentuk Video)
 	- python run_webcam.py --camera testvideo.MP4 --model mobilenet_thin --resize 320x240 --resize-out-ratio 4.0
 
 	(gw udh siapin 4 video testvideo.mp4, testvideo2.mp4 , testvideo3.mp4, testvideo4.mp4)
+
+	(Bentuk Live Camera)
+	- python run_webcam.py --camera 1 --model mobilenet_thin --resize 320x240 --resize-out-ratio 4.0
 
 Extra Note
 
