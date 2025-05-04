@@ -46,7 +46,6 @@ Cara download:
 	- python run_webcam.py --camera 1 --model mobilenet_thin --resize 320x240 --resize-out-ratio 4.0
 
 Extra Note
-
 1. Kalau ada error ModuleNotFoundError: No module named 'tensorrt'
 2. buka tf_pose -> estimator.py
 3. lalu comment "import tensorrt as trt"
