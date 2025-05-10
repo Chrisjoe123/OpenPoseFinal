@@ -33,6 +33,9 @@ if __name__ == '__main__':
                         help='for debug purpose, if enabled, speed for inference is dropped.')
     args = parser.parse_args()
 
+
+
+
     logger.debug('initialization %s : %s' % (args.model, get_graph_path(args.model)))
     w, h = model_wh(args.resize)
     if w > 0 and h > 0:
@@ -47,13 +50,21 @@ if __name__ == '__main__':
     while True:
         ret_val, image = cam.read()
 
-        logger.debug('image process+')
+        # logger.debug('image process+')
         humans = e.inference(image, resize_to_default=(w > 0 and h > 0), upsample_size=args.resize_out_ratio)
 
-        logger.debug('postprocess+')
+        # logger.debug('postprocess+')
         image = TfPoseEstimator.draw_humans(image, humans, imgcopy=False)
 
-        logger.debug('show+')
+        # logger.debug('show+')
+
+        no_people = len(humans)
+        print("No of People :",no_people)
+        cv2.putText(image,
+                    "People: %d" % (no_people),
+                    (10, 50),  cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+                    (255, 255, 255), 2)
+        cv2.imshow('tf-pose-estimation result', image)
         cv2.putText(image,
                     "FPS: %f" % (1.0 / (time.time() - fps_time)),
                     (10, 10),  cv2.FONT_HERSHEY_SIMPLEX, 0.5,
@@ -62,6 +73,6 @@ if __name__ == '__main__':
         fps_time = time.time()
         if cv2.waitKey(1) == 27:
             break
-        logger.debug('finished+')
+        # logger.debug('finished+')
 
     cv2.destroyAllWindows()
