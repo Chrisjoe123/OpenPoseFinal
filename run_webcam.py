@@ -200,18 +200,18 @@ def classify_exercise_by_angles(angles):
         if 60 < avg_arm_angle < 120 and 45 < angles['torso'] < 135:
             return "push_up"
     
-    # Check for jumping jack
-    if 'right_arm' in angles and 'left_arm' in angles:
-        if avg_arm_angle > 140:  # Arms raised up/out
-            return "jumping_jack"
+    # # Check for jumping jack
+    # if 'right_arm' in angles and 'left_arm' in angles:
+    #     if avg_arm_angle > 140:  # Arms raised up/out
+    #         return "jumping_jack"
     
-    # Check for situp
-    if 'torso' in angles and 30 < angles['torso'] < 90:
-        return "situp"
+    # # Check for situp
+    # if 'torso' in angles and 30 < angles['torso'] < 90:
+    #     return "situp"
     
-    # Check for pull-up
-    if avg_arm_angle < 90 and 'torso' in angles and angles['torso'] > 150:
-        return "pull_up"
+    # # Check for pull-up
+    # if avg_arm_angle < 90 and 'torso' in angles and angles['torso'] > 150:
+    #     return "pull_up"
     
     return "Unknown"
 
@@ -233,33 +233,37 @@ def detect_exercise_state(angles, current_exercise):
     elif current_exercise == "push_up":
         if 'right_arm' in angles and 'left_arm' in angles:
             arm_angle = (angles['right_arm'] + angles['left_arm']) / 2
+            
             if arm_angle < 90:
                 return "down"
-            elif arm_angle > 160:
-                return "up"
-    
-    elif current_exercise == "situp":
-        if 'torso' in angles:
-            if angles['torso'] > 60:
-                return "up"
-            elif angles['torso'] < 30:
-                return "down"
-    
-    elif current_exercise == "jumping_jack":
-        if 'right_arm' in angles and 'left_arm' in angles:
-            arm_angle = (angles['right_arm'] + angles['left_arm']) / 2
-            if arm_angle > 140:
-                return "up"
-            elif arm_angle < 80:
-                return "down"
-    
-    elif current_exercise == "pull_up":
-        if 'right_arm' in angles and 'left_arm' in angles:
-            arm_angle = (angles['right_arm'] + angles['left_arm']) / 2
-            if arm_angle < 90:
-                return "up"
             elif arm_angle > 150:
-                return "down"
+                return "up"
+            else:
+                return "transitioning"
+
+    
+    # elif current_exercise == "situp":
+    #     if 'torso' in angles:
+    #         if angles['torso'] > 60:
+    #             return "up"
+    #         elif angles['torso'] < 30:
+    #             return "down"
+    
+    # elif current_exercise == "jumping_jack":
+    #     if 'right_arm' in angles and 'left_arm' in angles:
+    #         arm_angle = (angles['right_arm'] + angles['left_arm']) / 2
+    #         if arm_angle > 140:
+    #             return "up"
+    #         elif arm_angle < 80:
+    #             return "down"
+    
+    # elif current_exercise == "pull_up":
+    #     if 'right_arm' in angles and 'left_arm' in angles:
+    #         arm_angle = (angles['right_arm'] + angles['left_arm']) / 2
+    #         if arm_angle < 90:
+    #             return "up"
+    #         elif arm_angle > 150:
+    #             return "down"
     
     return "transitioning"  # In between up and down
 
@@ -293,7 +297,7 @@ def debug_angles(image, angles, y_start=130):
         cv2.putText(image,
                 f"{angle_name}: {angle_value:.1f}°",
                 (10, y_pos), cv2.FONT_HERSHEY_SIMPLEX, 0.4,
-                (0, 255, 0), 1)
+                (255,105,180), 1)
         y_pos += 20
     
     return image
@@ -321,13 +325,13 @@ if __name__ == '__main__':
     # Load datasets
     labels_df, landmarks_df, angles_df, exercise_classes = load_datasets(args.labels, args.landmarks, args.angles)
 
-    #logger.debug('initialization %s : %s' % (args.model, get_graph_path(args.model)))
+    logger.debug('initialization %s : %s' % (args.model, get_graph_path(args.model)))
     w, h = model_wh(args.resize)
     if w > 0 and h > 0:
         e = TfPoseEstimator(get_graph_path(args.model), target_size=(w, h))
     else:
         e = TfPoseEstimator(get_graph_path(args.model), target_size=(432, 368))
-    #logger.debug('cam read+')
+    logger.debug('cam read+')
     cam = cv2.VideoCapture(args.camera)
     ret_val, image = cam.read()
     logger.info('cam image=%dx%d' % (image.shape[1], image.shape[0]))
@@ -347,10 +351,10 @@ if __name__ == '__main__':
             logger.error("Failed to read from camera")
             break
 
-        logger.debug('image process+')
+        #logger.debug('image process+')
         humans = e.inference(image, resize_to_default=(w > 0 and h > 0), upsample_size=args.resize_out_ratio)
 
-        logger.debug('postprocess+')
+        #logger.debug('postprocess+')
         image = TfPoseEstimator.draw_humans(image, humans, imgcopy=False)
 
         # Extract angles and classify exercise if humans detected
@@ -400,25 +404,25 @@ if __name__ == '__main__':
         cv2.putText(image,
                     f"Exercise: {current_exercise}",
                     (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
-                    (0, 255, 0), 2)
+                    (255,105,180), 2)
         
         # Display the rep count for the current exercise
-        count_display = rep_counts.get(current_exercise, 0) if current_exercise != "Unknown" else 0
-        cv2.putText(image,
-                    f"Count: {count_display}",
-                    (10, 70), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
-                    (0, 255, 0), 2)
+        # count_display = rep_counts.get(current_exercise, 0) if current_exercise != "Unknown" else 0
+        # cv2.putText(image,
+        #             f"Count: {count_display}",
+        #             (10, 70), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+        #             (0, 255, 0), 2)
         
         # Display the state for the current exercise
         cv2.putText(image,
                     f"State: {last_state}",
                     (10, 100), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
-                    (0, 255, 0), 2)
+                    (255,105,180), 2)
 
         cv2.putText(image,
                     "FPS: %f" % (1.0 / (time.time() - fps_time)),
                     (10, 10),  cv2.FONT_HERSHEY_SIMPLEX, 0.5,
-                    (0, 255, 0), 2)
+                    (255,105,180), 2)
         cv2.imshow('tf-pose-estimation result', image)
         fps_time = time.time()
         if cv2.waitKey(1) == 27:  # ESC key
