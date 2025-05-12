@@ -120,3 +120,4 @@ src/pafprocess/pafprocess_wrap.cpp
 src/pafprocess/pafprocess_wrap.cxx
 
 .pkl
+exercise_classifier.pkl

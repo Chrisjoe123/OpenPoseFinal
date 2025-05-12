@@ -118,7 +118,7 @@ def classify_with_model(angles, model):
 if __name__ == '__main__':
     # Argument dari command-line
     parser = argparse.ArgumentParser(description='tf-pose-estimation with ML classifier')
-    parser.add_argument('--camera', type=str, default=0)
+    parser.add_argument('--camera', type=str, default=1)
     parser.add_argument('--resize', type=str, default='320x240',)
     parser.add_argument('--resize-out-ratio', type=float, default=4.0)
     parser.add_argument('--model', type=str, default='mobilenet_thin')
