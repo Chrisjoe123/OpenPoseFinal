@@ -1,10 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Live Exercise Detection</title>
+<meta charset="UTF-8">
+<title>Live Exercise Detection - Canvas Version</title>
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        canvas {
+            border: 2px solid #333;
+            border-radius: 8px;
+        }
+</style>
 </head>
 <body>
-    <h1>Live Exercise Detection</h1>
-    <img src="{{ url_for('video_feed') }}" width="640" height="480">
+<div class="container">
+<h1>Live Exercise Pose Detection</h1>
+<canvas id="videoCanvas" width="640" height="480"></canvas>
+</div>
+ 
+    <script>
+        const canvas = document.getElementById('videoCanvas');
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+ 
+        img.onload = function() {
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            requestAnimationFrame(update);
+        };
+ 
+        function update() {
+            img.src = 'http://localhost:5000/video_feed?' + new Date().getTime();
+        }
+ 
+        // Start the stream
+        update();
+</script>
 </body>
 </html>
