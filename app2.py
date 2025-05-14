@@ -16,7 +16,7 @@ with open("exercise_cosine_model.pkl", "rb") as f:
     y_train = model_data["y"]
 
 # Setup pose estimator
-w, h = model_wh('320x240')
+w, h = model_wh('640x480')
 e = TfPoseEstimator(get_graph_path('mobilenet_thin'), target_size=(w, h))
 cam = cv2.VideoCapture(1)
 
