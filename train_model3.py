@@ -1,6 +1,8 @@
 import pandas as pd
 import pickle
+import numpy as np
 from sklearn.preprocessing import normalize
+from sklearn.metrics.pairwise import cosine_similarity
 
 # Load landmarks.csv and labels.csv
 landmarks = pd.read_csv("Dataset/landmarks.csv")
@@ -29,9 +31,13 @@ for _, row in data.iterrows():
 X = normalize(X, axis=1)
 y = data["class"].values
 
+# Test cosine similarity to confirm functionality
+if len(X) > 1:
+    test_similarity = cosine_similarity([X[0]], [X[1]])[0][0]
+    print(f"Test cosine similarity between first two samples: {test_similarity}")
+
 # Save normalized vectors and labels
 with open("exercise_cosine_model.pkl", "wb") as f:
     pickle.dump({"X": X, "y": y}, f)
 
 print("✅ Model trained and saved as exercise_cosine_model.pkl with 36 flat features.")
- 

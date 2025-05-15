@@ -6,6 +6,7 @@ from tf_pose.estimator import TfPoseEstimator
 from tf_pose.networks import get_graph_path, model_wh
 import pandas as pd
 import time
+from sklearn.metrics.pairwise import cosine_similarity
 
 app = Flask(__name__)
 
@@ -34,8 +35,10 @@ def extract_flat_vector(human, image_w, image_h):
 
 def predict_pose(flat_vector):
     input_vector = np.array(flat_vector).reshape(1, -1)
+    # Normalize the input vector
     input_norm = input_vector / (np.linalg.norm(input_vector) + 1e-6)
-    similarity_scores = np.dot(X_train, input_norm.T).flatten()
+    # Use cosine_similarity instead of dot product
+    similarity_scores = cosine_similarity(input_norm, X_train).flatten()
     top_k = np.argsort(similarity_scores)[-5:]
     top_k_labels = y_train[top_k]
     return pd.Series(top_k_labels).value_counts().idxmax()
@@ -78,4 +81,3 @@ def video_feed():
 
 if __name__ == '__main__':
     app.run(debug=True)
- 
